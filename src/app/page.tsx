@@ -1,10 +1,10 @@
 "use client";
-
-import { useEffect, useRef } from 'react'
-import * as THREE from 'three'
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import WebGL from 'three/examples/jsm/capabilities/WebGL.js';
 
 export default function Home() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<any>(null);
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -14,7 +14,7 @@ export default function Home() {
       window.innerWidth / window.innerHeight, // 종횡비
       0.1,  // near
       1000  // far
-    )
+    );
 
 
     const renderer = new THREE.WebGLRenderer();
@@ -23,11 +23,11 @@ export default function Home() {
 
     canvasRef.current?.appendChild(renderer.domElement);
 
-    const geometry = new THREE.BoxGeometry(10, 10, 10) // 가로, 세로, 높이
-    const material = new THREE.MeshBasicMaterial({ color: 0xfffafa })
+    const geometry = new THREE.BoxGeometry(10, 10, 10); // 가로, 세로, 높이
+    const material = new THREE.MeshBasicMaterial({ color: 0xfffafa });
     const cube = new THREE.Mesh(geometry, material);
 
-    const ambientLight = new THREE.AmbientLight('white', 1) // 색상, 강도 
+    const ambientLight = new THREE.AmbientLight('white', 1); // 색상, 강도 
 
     scene.add(cube);
     scene.add(ambientLight);
@@ -43,7 +43,14 @@ export default function Home() {
       renderer.render(scene, camera);
     };
 
-    animate();
+    // 브라우져 호환성검사
+    if ( WebGL.isWebGLAvailable()) {
+      animate();
+    }
+    else {
+      const warning = WebGL.getWebGLErrorMessage();
+      canvasRef.current?.appendChild( warning );
+    }
 
     return () => canvasRef.current?.removeChild(renderer.domElement);
   }, []);
