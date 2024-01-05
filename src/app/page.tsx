@@ -1,5 +1,6 @@
 "use client";
 import { cube } from "./cube";
+import { line } from "./line";
 
 export default function Home() {
   return (
@@ -10,6 +11,9 @@ export default function Home() {
         </div>
         <div>
           {cube()}
+        </div>
+        <div>
+          {line()}
         </div>
       </div>
     </main>
