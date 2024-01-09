@@ -21,7 +21,7 @@ export function cube() {
   
     canvasRef.current?.appendChild(renderer.domElement);
 
-    const geometry = new THREE.BoxGeometry(10, 10, 10); // 가로, 세로, 높이
+    const geometry = new THREE.BoxGeometry(1, 1, 1); // 가로, 세로, 높이
     const material = new THREE.MeshBasicMaterial({ color: 0xfffafa });
     const cube = new THREE.Mesh(geometry, material);
   
@@ -30,7 +30,13 @@ export function cube() {
     scene.add(cube);
     scene.add(ambientLight);
 
-    camera.position.z = 20;
+    // 카메라 X, Y, Z 위치를 이동
+    camera.position.set(2, 8, 5);
+    camera.lookAt(cube.position);
+
+    // 장면에 X, Y, Z 축을 표시 (X : Red, Y : Green, Z : Blue) 
+    const axes = new THREE.AxesHelper(5);
+    scene.add(axes);
 
     function animate() {
       requestAnimationFrame(animate);
