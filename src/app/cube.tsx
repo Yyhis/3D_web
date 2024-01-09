@@ -34,6 +34,17 @@ export function cube() {
     camera.position.set(2, 8, 5);
     camera.lookAt(cube.position);
 
+    // 평면 생성
+    const planeGeometry = new THREE.PlaneGeometry(30, 30);
+    const planeMaterial = new THREE.MeshToonMaterial({color:0xd3d3d3});
+    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+
+    // 평면을 바닥으로 위치
+    plane.rotation.x = Math.PI * -0.5;
+    plane.position.set(0, -1, 0);
+
+    scene.add(plane);
+
     // 장면에 X, Y, Z 축을 표시 (X : Red, Y : Green, Z : Blue) 
     const axes = new THREE.AxesHelper(5);
     scene.add(axes);
