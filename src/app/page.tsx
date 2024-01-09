@@ -1,10 +1,11 @@
 "use client";
-import { background } from "./texture";
+
+import { cube } from "./cube";
 
 export default function Home() {
   return (
-    <div className="display: block">
-        {background()}
+    <div>
+        {cube()}
     </div>
   )
 }
