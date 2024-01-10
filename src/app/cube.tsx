@@ -22,21 +22,23 @@ export function cube() {
     canvasRef.current?.appendChild(renderer.domElement);
 
     const geometry = new THREE.BoxGeometry(1, 1, 1); // 가로, 세로, 높이
-    const material = new THREE.MeshBasicMaterial({ color: 0xfffafa });
+    const material = new THREE.MeshPhongMaterial({ color: 0x98fb98 });
     const cube = new THREE.Mesh(geometry, material);
-  
-    const ambientLight = new THREE.AmbientLight('white', 1); // 색상, 강도 
+    cube.position.set(0, 2, 0);
+
+    const light = new THREE.DirectionalLight(0xffffff, 1); // 색상, 강도 
+    light.position.set(-1, 2, 1);
 
     scene.add(cube);
-    scene.add(ambientLight);
+    scene.add(light);
 
     // 카메라 X, Y, Z 위치를 이동
-    camera.position.set(2, 8, 5);
+    camera.position.set(2, 5, 5);
     camera.lookAt(cube.position);
 
     // 평면 생성
     const planeGeometry = new THREE.PlaneGeometry(30, 30);
-    const planeMaterial = new THREE.MeshToonMaterial({color:0xd3d3d3});
+    const planeMaterial = new THREE.MeshToonMaterial({color: 0xffffff });
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
     // 평면을 바닥으로 위치
@@ -48,6 +50,16 @@ export function cube() {
     // 장면에 X, Y, Z 축을 표시 (X : Red, Y : Green, Z : Blue) 
     const axes = new THREE.AxesHelper(5);
     scene.add(axes);
+
+    // 그림자 활성화 및 그림자 타입 지정
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // 그림자 생성 개체 지정
+    cube.castShadow = true;
+    light.castShadow = true;
+    // 바닥에 그림자 받기
+    plane.receiveShadow = true;
 
     function animate() {
       requestAnimationFrame(animate);
