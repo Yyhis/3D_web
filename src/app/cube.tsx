@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import WebGL from "three/examples/jsm/capabilities/WebGL.js";
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export function cube() {
   const canvasRef = useRef<any>(null);
@@ -61,12 +62,17 @@ export function cube() {
     // 바닥에 그림자 받기
     plane.receiveShadow = true;
 
+    // 컨트롤 생성
+    const controls = new OrbitControls(camera, renderer.domElement);
+
     function animate() {
       requestAnimationFrame(animate);
       // 큐브 회전
       cube.rotation.x += 0.01;
       cube.rotation.y += 0.01;
       cube.rotation.z += 0.005;
+
+      controls.update();
       renderer.render(scene, camera);
     };
 
