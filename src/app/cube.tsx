@@ -25,13 +25,16 @@ export function cube() {
     const geometry = new THREE.BoxGeometry(1, 1, 1); // 가로, 세로, 높이
     const material = new THREE.MeshPhongMaterial({ color: 0x98fb98 });
     const cube = new THREE.Mesh(geometry, material);
-    cube.position.set(0, 2, 0);
+    cube.position.set(0, 1, 0);
 
     const light = new THREE.DirectionalLight(0xffffff, 1); // 색상, 강도 
-    light.position.set(-1, 2, 1);
+    light.position.set(-1, 4, 1);
+
+    const lightHelper = new THREE.DirectionalLightHelper(light, 1, 0xff0000);
 
     scene.add(cube);
     scene.add(light);
+    scene.add(lightHelper);
 
     // 카메라 X, Y, Z 위치를 이동
     camera.position.set(2, 5, 5);
