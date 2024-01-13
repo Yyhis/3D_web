@@ -68,6 +68,9 @@ export function cube() {
     // 컨트롤 생성
     const controls = new OrbitControls(camera, renderer.domElement);
 
+    // 마우스 이동
+    renderer.domElement.addEventListener( 'click', (e)=> move(e, cube), false );
+
     function animate() {
       requestAnimationFrame(animate);
       // 큐브 회전
@@ -78,6 +81,19 @@ export function cube() {
       controls.update();
       renderer.render(scene, camera);
     };
+
+    function move (event: MouseEvent, cube: THREE.Mesh<THREE.BoxGeometry, THREE.MeshPhongMaterial, THREE.Object3DEventMap>) {
+      event.preventDefault();
+
+      let x = ( Math.random() * 21 ) - 10;
+      let z = ( Math.random() * 21 ) - 10;
+    
+      console.log( "x: " + x );
+      console.log( "z: " + z );
+
+      cube.position.set(x, 1, z);
+    }
+    
 
     // 브라우져 호환성검사
     if ( WebGL.isWebGLAvailable()) {
