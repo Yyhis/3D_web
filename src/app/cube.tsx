@@ -79,6 +79,7 @@ export function cube() {
       cube.rotation.z += 0.005;
 
       controls.update();
+      camera.position.set(cube.position.x + 5, 10, cube.position.z + 5);
       camera.lookAt(cube.position);
       renderer.render(scene, camera);
     };
